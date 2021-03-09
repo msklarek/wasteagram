@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:path/path.dart' as Path;
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CameraScreen extends StatefulWidget {
   @override
@@ -17,14 +18,12 @@ class _CameraScreenState extends State<CameraScreen> {
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     image = File(pickedFile.path);
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    // StorageReference storageReference =
-    //     FirebaseStorage.instance.ref().child(Path.basename(image.path));
-    // StorageUpload uploadTask = storageReference.putFile(image);
-    // await uploadTask.onComplete;
-    // final url = await storageReference.getDownloadURL();
-    // print(url);
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child(Path.basename(image.path));
+    StorageUploadTask uploadTask = storageReference.putFile(image);
+    await uploadTask.onComplete;
+    final url = await storageReference.getDownloadURL();
+    print(url);
     //setState(() {});
   }
 
