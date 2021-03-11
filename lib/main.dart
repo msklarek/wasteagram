@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'location.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'camera_screen.dart';
+import 'screens/list_screen.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 Future<void> main() async {
@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Something',
+        title: 'Wasteagram',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -38,7 +38,7 @@ class TabController extends StatelessWidget {
 
   final screens = [
     ShareLocationScreen(),
-    CameraScreen(),
+    ListScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class TabController extends StatelessWidget {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Call Me Maybe'),
+          title: Text('Wasteagram'),
           bottom: TabBar(tabs: tabs),
         ),
         body: SafeArea(child: TabBarView(children: screens)),
