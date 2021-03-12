@@ -6,6 +6,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:path/path.dart' as Path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
+import 'add_post.dart';
+import 'detail_screen.dart';
+import '../models/posts.dart';
+import '../models/post_details.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   File image;
+  Posts posts;
 
   final picker = ImagePicker();
   Future getImage() async {
@@ -42,11 +47,19 @@ class _ListScreenState extends State<ListScreen> {
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (content, index) {
                         var post = snapshot.data.docs[index];
-                        return ListTile(
-                          leading: Text(formatter.format(
+                        return Card(
+                            child: ListTile(
+                          title: Text(formatter.format(
                               (post['submission_date'] as Timestamp).toDate())),
-                          title: Text(post['weight'].toString()),
-                        );
+                          trailing: Text(post['weight'].toString()),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailScreen(
+                                        singlePost: posts.entries[index])));
+                          },
+                        ));
                       }),
                 ),
                 FloatingActionButton(
