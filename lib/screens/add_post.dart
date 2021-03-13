@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart';
 
 class AddPost extends StatefulWidget {
   @override
@@ -30,14 +30,26 @@ class _AddPostState extends State<AddPost> {
       getImage();
       return Center(child: CircularProgressIndicator());
     } else {
-      return Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.file(image),
-          Text('Hello'),
-        ],
-      ));
+      return Scaffold(
+          body: Container(
+              padding: const EdgeInsets.all(40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.file(image),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Enter weight'),
+                    keyboardType: TextInputType.numberWithOptions(),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                  RaisedButton(
+                    child: Text('Upload'),
+                    onPressed: () {},
+                  )
+                ],
+              )));
     }
   }
 }

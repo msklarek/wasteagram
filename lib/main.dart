@@ -31,19 +31,17 @@ class _MyAppState extends State<MyApp> {
 
 class TabController extends StatelessWidget {
   static const tabs = [
-    Tab(icon: Icon(Icons.map)),
     Tab(icon: Icon(Icons.picture_in_picture_sharp)),
     //Tab(icon: Icon(Icons.picture_as_pdf)),
   ];
 
   final screens = [
-    ShareLocationScreen(),
     ListScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 1,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
