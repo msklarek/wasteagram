@@ -21,17 +21,17 @@ class _ListScreenState extends State<ListScreen> {
   Posts posts;
 
   final picker = ImagePicker();
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    image = File(pickedFile.path);
-    // StorageReference storageReference =
-    //     FirebaseStorage.instance.ref().child(Path.basename(image.path));
-    // StorageUploadTask uploadTask = storageReference.putFile(image);
-    // await uploadTask.onComplete;
-    // final url = await storageReference.getDownloadURL();
-    // print(url);
-    setState(() {});
-  }
+  // Future getImage() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //   image = File(pickedFile.path);
+  //   // StorageReference storageReference =
+  //   //     FirebaseStorage.instance.ref().child(Path.basename(image.path));
+  //   // StorageUploadTask uploadTask = storageReference.putFile(image);
+  //   // await uploadTask.onComplete;
+  //   // final url = await storageReference.getDownloadURL();
+  //   // print(url);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,9 @@ class _ListScreenState extends State<ListScreen> {
                 ),
                 FloatingActionButton(
                   onPressed: () {
-                    getImage();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddPost()));
+                    // getImage();
                     // FirebaseFirestore.instance.collection('posts').add({
                     //   'weight': 222,
                     //   'submission_date': DateTime.parse('2020-01-31')
