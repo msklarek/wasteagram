@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:path/path.dart' as Path;
@@ -17,10 +16,10 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  File image;
+  // File image;
   Posts posts;
 
-  final picker = ImagePicker();
+  // final picker = ImagePicker();
   // Future getImage() async {
   //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
   //   image = File(pickedFile.path);

@@ -16,6 +16,7 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   File image;
   LocationData locationData;
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -23,7 +24,6 @@ class _AddPostState extends State<AddPost> {
     retrieveLocation();
   }
 
-  final picker = ImagePicker();
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     image = File(pickedFile.path);
@@ -79,7 +79,7 @@ class _AddPostState extends State<AddPost> {
   Widget build(BuildContext context) {
     if (image == null) {
       getImage();
-      retrieveLocation();
+      // retrieveLocation();
       return Center(child: CircularProgressIndicator());
     } else {
       return Scaffold(
@@ -99,11 +99,11 @@ class _AddPostState extends State<AddPost> {
                   RaisedButton(
                     child: Text('Upload'),
                     onPressed: () {
-                      uploadImage();
-                      FirebaseFirestore.instance.collection('posts').add({
-                        'weight': 222,
-                        'submission_date': DateTime.parse('2020-01-31')
-                      });
+                      // uploadImage();
+                      // FirebaseFirestore.instance.collection('posts').add({
+                      //   'weight': 222,
+                      //   'submission_date': DateTime.parse('2020-01-31')
+                      // });
                     },
                   )
                 ],
