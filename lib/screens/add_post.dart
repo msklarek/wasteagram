@@ -20,6 +20,7 @@ class _AddPostState extends State<AddPost> {
   final picker = ImagePicker();
   final formKey = new GlobalKey<FormState>();
   final post = PostDetails();
+  String uploadedImageUrl;
 
   @override
   void initState() {
@@ -40,23 +41,18 @@ class _AddPostState extends State<AddPost> {
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     image = File(pickedFile.path);
-    // StorageReference storageReference =
-    //     FirebaseStorage.instance.ref().child(Path.basename(image.path));
-    // StorageUploadTask uploadTask = storageReference.putFile(image);
-    // await uploadTask.onComplete;
-    // final url = await storageReference.getDownloadURL();
-    // print(url);
     setState(() {});
   }
 
-  Future uploadImage() async {
+  Future<String> uploadImage(DateTime currentTime) async {
     StorageReference storageReference =
-        FirebaseStorage.instance.ref().child(Path.basename(image.path));
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-    final url = await storageReference.getDownloadURL();
-    print(url);
-    setState(() {});
+        FirebaseStorage.instance.ref().child("image");
+    StorageUploadTask uploadTask =
+        storageReference.child(currentTime.toString() + ".jpg").putFile(image);
+    final imgLocation =
+        await (await uploadTask.onComplete).ref.getDownloadURL();
+    var url = imgLocation.toString();
+    return url;
   }
 
   void retrieveLocation() async {
@@ -85,7 +81,8 @@ class _AddPostState extends State<AddPost> {
       locationData = null;
     }
     locationData = await locationService.getLocation();
-    setState(() {});
+    post.location = GeoPoint(locationData.latitude, locationData.longitude);
+    // setState(() {});
   }
 
   @override
@@ -131,36 +128,21 @@ class _AddPostState extends State<AddPost> {
                         child: Text('Add a new Item'),
                         textColor: Colors.white,
                         color: Colors.pink,
-                        onPressed: () {
-                          uploadImage();
+                        onPressed: () async {
+                          if (validateAndSave()) {
+                            var currentTime = new DateTime.now();
+                            var url = await uploadImage(currentTime);
+                            print(url);
+                            post.imageURL = url;
+                            post.date = Timestamp.fromDate(currentTime);
+                            // print(uploadedImageUrl);
+                            post.addPostCloud();
+                            Navigator.of(context).pop();
+                          }
                         },
                       ),
                     ),
                   ]))));
-      // padding: const EdgeInsets.all(40.0),
-      // child: Column(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   children: [
-      //     Image.file(image),
-      //     TextField(
-      //       decoration: InputDecoration(labelText: 'Enter weight'),
-      //       keyboardType: TextInputType.numberWithOptions(),
-      //       inputFormatters: <TextInputFormatter>[
-      //         FilteringTextInputFormatter.digitsOnly
-      //       ],
-      //     ),
-      //     RaisedButton(
-      //       child: Text('Upload'),
-      //       onPressed: () {
-      //         // uploadImage();
-      //         // FirebaseFirestore.instance.collection('posts').add({
-      //         //   'weight': 222,
-      //         //   'submission_date': DateTime.parse('2020-01-31')
-      //         // });
-      //       },
-      //     )
-      //   ],
-      // )));
     }
   }
 }

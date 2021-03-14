@@ -48,8 +48,8 @@ class _ListScreenState extends State<ListScreen> {
                         var post = snapshot.data.docs[index];
                         return Card(
                             child: ListTile(
-                          title: Text(formatter.format(
-                              (post['submission_date'] as Timestamp).toDate())),
+                          title: Text(formatter
+                              .format((post['date'] as Timestamp).toDate())),
                           trailing: Text(post['weight'].toString()),
                           onTap: () {
                             Navigator.push(
