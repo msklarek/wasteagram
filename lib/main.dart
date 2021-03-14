@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/widgets/total_counter.dart';
 import 'location.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,10 +45,7 @@ class TabController extends StatelessWidget {
       length: 1,
       initialIndex: 0,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Wasteagram'),
-          bottom: TabBar(tabs: tabs),
-        ),
+        appBar: TotalCounter(context),
         body: SafeArea(child: TabBarView(children: screens)),
       ),
     );

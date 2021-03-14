@@ -19,24 +19,14 @@ class _ListScreenState extends State<ListScreen> {
   // File image;
   Posts posts;
 
-  // final picker = ImagePicker();
-  // Future getImage() async {
-  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
-  //   image = File(pickedFile.path);
-  //   // StorageReference storageReference =
-  //   //     FirebaseStorage.instance.ref().child(Path.basename(image.path));
-  //   // StorageUploadTask uploadTask = storageReference.putFile(image);
-  //   // await uploadTask.onComplete;
-  //   // final url = await storageReference.getDownloadURL();
-  //   // print(url);
-  //   setState(() {});
-  // }
-
   @override
   Widget build(BuildContext context) {
     var formatter = new DateFormat('EEEE, LLLL, dd, yyyy');
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy('date', descending: true)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -69,11 +59,6 @@ class _ListScreenState extends State<ListScreen> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => AddPost()));
-                    // getImage();
-                    // FirebaseFirestore.instance.collection('posts').add({
-                    //   'weight': 222,
-                    //   'submission_date': DateTime.parse('2020-01-31')
-                    // });
                   },
                   tooltip: 'Add Entry',
                   child: Icon(Icons.camera),

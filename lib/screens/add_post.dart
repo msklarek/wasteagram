@@ -49,7 +49,8 @@ class _AddPostState extends State<AddPost> {
         FirebaseStorage.instance.ref().child("image");
     StorageUploadTask uploadTask =
         storageReference.child(currentTime.toString() + ".jpg").putFile(image);
-    final imgLocation = await (await uploadTask.onComplete).ref.getDownloadURL();
+    final imgLocation =
+        await (await uploadTask.onComplete).ref.getDownloadURL();
     var url = imgLocation.toString();
     return url;
   }
@@ -92,6 +93,8 @@ class _AddPostState extends State<AddPost> {
       return Center(child: CircularProgressIndicator());
     } else {
       return Scaffold(
+          appBar: new AppBar(title: new Text('New Post')),
+          backgroundColor: Colors.grey[800],
           body: Container(
               child: Form(
                   key: formKey,
@@ -109,10 +112,17 @@ class _AddPostState extends State<AddPost> {
                       inputFormatters: <TextInputFormatter>[
                         WhitelistingTextInputFormatter.digitsOnly
                       ], // Only numbers can be entered
-                      decoration:
-                          new InputDecoration(labelText: 'Number of Items'),
+                      decoration: new InputDecoration(
+                          labelText: 'Number of Wasted Items'),
                       onSaved: (value) {
                         return post.weight = num.parse(value);
+                      },
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter a value';
+                        } else {
+                          return null;
+                        }
                       },
                     ),
                     SizedBox(
@@ -121,20 +131,18 @@ class _AddPostState extends State<AddPost> {
                     Semantics(
                       button: true,
                       enabled: true,
-                      onTapHint: 'Upload the Item',
+                      onTapHint: 'Upload to cloud',
                       child: RaisedButton(
                         elevation: 10.0,
-                        child: Text('Add a new Item'),
+                        child: Text('Upload'),
                         textColor: Colors.white,
-                        color: Colors.pink,
+                        color: Colors.blue[300],
                         onPressed: () async {
                           if (validateAndSave()) {
                             var currentTime = new DateTime.now();
                             var url = await uploadImage(currentTime);
-                            print(url);
                             post.imageURL = url;
                             post.date = Timestamp.fromDate(currentTime);
-                            // print(uploadedImageUrl);
                             post.addPostCloud();
                             Navigator.of(context).pop();
                           }

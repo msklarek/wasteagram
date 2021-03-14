@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/widgets/display_image.dart';
 import '../models/post_details.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -14,30 +15,38 @@ import '../models/post_details.dart';
 class DetailScreen extends StatelessWidget {
   PostDetails singlePost;
 
-  //requiring the list of todos
   DetailScreen({Key key, @required this.singlePost}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var formatter = new DateFormat('EEEE, LLLL, dd, yyyy');
-
-    if (singlePost == null) {
-      return Center(child: CircularProgressIndicator());
-    } else {
-      return Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(formatter.format(DateTime.fromMillisecondsSinceEpoch(
-              singlePost.date.millisecondsSinceEpoch))),
-          // Text(
-          //   singlePost.imageURL,
-          // ),
-          Text(singlePost.weight.toString()),
-          Text(
-              'Location: (${singlePost.location.latitude}, ${singlePost.location.longitude}'),
+    return new Scaffold(
+      appBar: new AppBar(title: new Text('Wasteagram')),
+      backgroundColor: Colors.grey[800],
+      body: ListView(
+        children: <Widget>[
+          Container(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  formatter.format(DateTime.fromMillisecondsSinceEpoch(
+                      singlePost.date.millisecondsSinceEpoch)),
+                  style: TextStyle(fontSize: 26, color: Colors.white),
+                ),
+                DisplayImage(singlePost: singlePost),
+                SizedBox(
+                  height: 15,
+                ),
+                Text('${singlePost.weight.toString()} items',
+                    style: TextStyle(fontSize: 22, color: Colors.white)),
+                Text(
+                    'Location: (${singlePost.location.latitude}, ${singlePost.location.longitude})',
+                    style: TextStyle(fontSize: 22, color: Colors.white))
+              ],
+            ),
+          ),
         ],
-      ));
-    }
+      ),
+    );
   }
 }
