@@ -32,7 +32,6 @@ class _MyAppState extends State<MyApp> {
 class TabController extends StatelessWidget {
   static const tabs = [
     Tab(icon: Icon(Icons.picture_in_picture_sharp)),
-    //Tab(icon: Icon(Icons.picture_as_pdf)),
   ];
 
   final screens = [
