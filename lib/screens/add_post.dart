@@ -6,8 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 import 'package:wasteagram/models/post_details.dart';
-import '../location.dart';
-import 'package:path/path.dart' as Path;
 
 class AddPost extends StatefulWidget {
   @override

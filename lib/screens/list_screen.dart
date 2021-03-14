@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:path/path.dart' as Path;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
-import 'add_post.dart';
+import 'package:wasteagram/widgets/add_post_button.dart';
 import 'detail_screen.dart';
 import '../models/posts.dart';
 import '../models/post_details.dart';
+import '../widgets/add_post_button.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -28,7 +25,9 @@ class _ListScreenState extends State<ListScreen> {
             .orderBy('date', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData &&
+              snapshot.data.documents != null &&
+              snapshot.data.documents.length > 0) {
             return Column(
               children: [
                 Expanded(
@@ -55,21 +54,24 @@ class _ListScreenState extends State<ListScreen> {
                         ));
                       }),
                 ),
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddPost()));
-                  },
-                  tooltip: 'Add Entry',
-                  child: Icon(Icons.camera),
-                ),
+                AddPostButton(),
               ],
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            // return ;
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Center(child: CircularProgressIndicator()),
+                  // SizedBox(
+                  //   height: 30,
+                  // ),
+                  AddPostButton()
+                ]);
           }
         });
   }
 }
-
-class Firestore {}
