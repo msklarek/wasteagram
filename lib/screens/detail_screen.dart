@@ -28,12 +28,14 @@ class DetailScreen extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Text(formatter.format(singlePost.date)),
+          Text(formatter.format(DateTime.fromMillisecondsSinceEpoch(
+              singlePost.date.millisecondsSinceEpoch))),
           // Text(
           //   singlePost.imageURL,
           // ),
-          // Text(singlePost.weight.toString()),
-          // Text('Location: (${singlePost.latitude}, ${singlePost.longitude}'),
+          Text(singlePost.weight.toString()),
+          Text(
+              'Location: (${singlePost.location.latitude}, ${singlePost.location.longitude}'),
         ],
       ));
     }

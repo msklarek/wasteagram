@@ -56,7 +56,11 @@ class _ListScreenState extends State<ListScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => DetailScreen(
-                                        singlePost: posts.entries[index])));
+                                        singlePost: PostDetails(
+                                            imageURL: post['imageURL'],
+                                            date: post['date'],
+                                            location: post['location'],
+                                            weight: post['weight']))));
                           },
                         ));
                       }),

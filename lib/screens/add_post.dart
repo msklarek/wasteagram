@@ -49,8 +49,7 @@ class _AddPostState extends State<AddPost> {
         FirebaseStorage.instance.ref().child("image");
     StorageUploadTask uploadTask =
         storageReference.child(currentTime.toString() + ".jpg").putFile(image);
-    final imgLocation =
-        await (await uploadTask.onComplete).ref.getDownloadURL();
+    final imgLocation = await (await uploadTask.onComplete).ref.getDownloadURL();
     var url = imgLocation.toString();
     return url;
   }
