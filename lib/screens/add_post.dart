@@ -150,7 +150,7 @@ class _AddPostState extends State<AddPost> {
                             var url = await uploadImage(currentTime);
                             post.imageURL = url;
                             post.date = Timestamp.fromDate(currentTime);
-                            post.addPostCloud();
+                            post.saveToCloud();
                             _sendAnalyticsEvent(post.weight);
                             Navigator.of(context).pop();
                           }

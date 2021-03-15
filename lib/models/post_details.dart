@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostDetails {
   Timestamp date;
@@ -22,7 +21,7 @@ class PostDetails {
     weight = doc.get('weight');
   }
 
-  void addPostCloud() {
+  void saveToCloud() {
     Firestore.instance.collection('posts').add({
       'date': this.date,
       'imageURL': this.imageURL,

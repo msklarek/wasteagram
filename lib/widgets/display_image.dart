@@ -14,14 +14,13 @@ class DisplayImage extends StatelessWidget {
     return Image.network(
       singlePost.imageURL,
       scale: 0.5,
-      loadingBuilder: (BuildContext context, Widget child,
-          ImageChunkEvent loadingProgress) {
-        if (loadingProgress == null) return child;
+      loadingBuilder:
+          (BuildContext context, Widget child, ImageChunkEvent loading) {
+        if (loading == null) return child;
         return Center(
           child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes
+            value: loading.expectedTotalBytes != null
+                ? loading.cumulativeBytesLoaded / loading.expectedTotalBytes
                 : null,
           ),
         );

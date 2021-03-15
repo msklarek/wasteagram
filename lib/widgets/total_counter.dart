@@ -7,7 +7,9 @@ Widget TotalCounter(BuildContext context) {
       stream: Firestore.instance.collection('posts').snapshots(),
       builder: (context, snapshot) {
         int count = 0;
-        if (snapshot.hasData) {
+        if (snapshot.hasData &&
+            snapshot.data.documents != null &&
+            snapshot.data.documents.length > 0) {
           for (var i = 0; i < snapshot.data.documents.length; i++) {
             try {
               count += snapshot.data.documents[i]['weight'];

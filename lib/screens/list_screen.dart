@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wasteagram/widgets/add_post_button.dart';
 import 'detail_screen.dart';
-import '../models/posts.dart';
 import '../models/post_details.dart';
 import '../widgets/add_post_button.dart';
 
@@ -19,12 +18,8 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  // File image;
-  Posts posts;
-
   static Future<void> reportError(dynamic error, dynamic stackTrace) async {
-    final sentryId =
-        await Sentry.captureException(error, stackTrace: stackTrace);
+    await Sentry.captureException(error, stackTrace: stackTrace);
   }
 
   @override
