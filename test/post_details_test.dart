@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wasteagram/models/post_details.dart';
+import 'package:wasteagram/screens/add_post.dart';
 
 void main() async {
   int currentTimeMs = DateTime.now().millisecondsSinceEpoch;
@@ -43,5 +44,13 @@ void main() async {
     expect(post.location.latitude, 22.6);
     expect(post.location.longitude, 23.5);
     expect(post.weight, 2);
+  });
+
+  test('Empty value should return error', () {
+    expect(Validator.validateNum(''), 'Please enter a value');
+  });
+
+  test('Valid value should not return error', () {
+    expect(Validator.validateNum('5'), null);
   });
 }
