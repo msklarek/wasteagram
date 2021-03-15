@@ -45,11 +45,9 @@ class _ListScreenState extends State<ListScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => DetailScreen(
-                                        singlePost: PostDetails(
-                                            imageURL: post['imageURL'],
-                                            date: post['date'],
-                                            location: post['location'],
-                                            weight: post['weight']))));
+                                        singlePost:
+                                            PostDetails.fromFirestoreData(
+                                                post))));
                           },
                         ));
                       }),

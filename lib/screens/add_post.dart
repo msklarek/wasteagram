@@ -115,13 +115,7 @@ class _AddPostState extends State<AddPost> {
                       onSaved: (value) {
                         return post.weight = num.parse(value);
                       },
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter a value';
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: Validator.validateNum,
                     ),
                     SizedBox(
                       height: 15.0,
@@ -148,6 +142,16 @@ class _AddPostState extends State<AddPost> {
                       ),
                     ),
                   ]))));
+    }
+  }
+}
+
+class Validator {
+  static String validateNum(String value) {
+    if (value.isEmpty) {
+      return 'Please enter a value';
+    } else {
+      return null;
     }
   }
 }

@@ -22,13 +22,14 @@ environment:
 
 dependencies:
   cloud_firestore: ^0.14.0
+  cloud_firestore_mocks: ^0.5.0
   firebase_core: ^0.5.0
   firebase_storage: ^4.0.1
   flutter:
     sdk: flutter
   image_picker: ^0.6.6+5
   intl: ^0.16.1
-  # numeric_keyboard: ^1.1.0
+  test:
 
   
 

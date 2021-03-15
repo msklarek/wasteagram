@@ -14,6 +14,14 @@ class PostDetails {
     @required this.weight,
     @required this.location,
   });
+
+  PostDetails.fromFirestoreData(QueryDocumentSnapshot doc) {
+    imageURL = doc.get('imageURL');
+    date = doc.get('date');
+    location = doc.get('location');
+    weight = doc.get('weight');
+  }
+
   void addPostCloud() {
     Firestore.instance.collection('posts').add({
       'date': this.date,
