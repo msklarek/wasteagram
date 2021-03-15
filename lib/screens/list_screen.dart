@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wasteagram/widgets/add_post_button.dart';
 import 'detail_screen.dart';
 import '../models/posts.dart';
@@ -20,6 +21,11 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   // File image;
   Posts posts;
+
+  static Future<void> reportError(dynamic error, dynamic stackTrace) async {
+    final sentryId =
+        await Sentry.captureException(error, stackTrace: stackTrace);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +46,32 @@ class _ListScreenState extends State<ListScreen> {
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (content, index) {
                         var post = snapshot.data.docs[index];
-                        return Card(
-                            child: ListTile(
-                          title: Text(formatter
-                              .format((post['date'] as Timestamp).toDate())),
-                          trailing: Text(post['weight'].toString()),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DetailScreen(
-                                        singlePost:
-                                            PostDetails.fromFirestoreData(
-                                                post))));
-                          },
-                        ));
+                        try {
+                          return Card(
+                              child: ListTile(
+                            title: Text(formatter
+                                .format((post['date'] as Timestamp).toDate())),
+                            trailing: Text(post['weight'].toString()),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailScreen(
+                                          singlePost:
+                                              PostDetails.fromFirestoreData(
+                                                  post))));
+                            },
+                          ));
+                        } catch (exception, stackTrace) {
+                          // if the record had error then send crash report to
+                          // sentry
+                          // handle the error nicely by showing an empty record
+                          reportError(exception, stackTrace);
+                          return Card(
+                              child: ListTile(
+                                  title: Text('Record has error'),
+                                  tileColor: Colors.red));
+                        }
                       }),
                 ),
                 AddPostButton(

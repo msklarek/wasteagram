@@ -1,17 +1,22 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wasteagram/widgets/total_counter.dart';
-import 'location.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'screens/list_screen.dart';
 
 bool USE_FIRESTORE_EMULATOR = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://638a88f6b8684578864442bb800b6366@o551707.ingest.sentry.io/5675387';
+    },
+    appRunner: () => runApp(MyApp()),
+  );
 }
 
 class MyApp extends StatefulWidget {

@@ -96,7 +96,6 @@ class _AddPostState extends State<AddPost> {
         'weight': num,
       },
     );
-    print('analytics sent');
   }
 
   @override

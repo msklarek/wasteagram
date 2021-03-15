@@ -9,7 +9,11 @@ Widget TotalCounter(BuildContext context) {
         int count = 0;
         if (snapshot.hasData) {
           for (var i = 0; i < snapshot.data.documents.length; i++) {
-            count += snapshot.data.documents[i]['weight'];
+            try {
+              count += snapshot.data.documents[i]['weight'];
+            } catch (exception) {
+              // if the record has weight field missing just swallow the error
+            }
           }
           return Text(
             "Wasteagram - $count",
