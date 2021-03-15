@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +10,10 @@ import 'package:location/location.dart';
 import 'package:wasteagram/models/post_details.dart';
 
 class AddPost extends StatefulWidget {
+  AddPost({Key key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
   @override
   _AddPostState createState() => _AddPostState();
 }
@@ -83,6 +89,16 @@ class _AddPostState extends State<AddPost> {
     // setState(() {});
   }
 
+  Future<void> _sendAnalyticsEvent(int num) async {
+    await widget.analytics.logEvent(
+      name: 'wasted_item_update',
+      parameters: <String, dynamic>{
+        'weight': num,
+      },
+    );
+    print('analytics sent');
+  }
+
   @override
   Widget build(BuildContext context) {
     if (image == null) {
@@ -136,6 +152,7 @@ class _AddPostState extends State<AddPost> {
                             post.imageURL = url;
                             post.date = Timestamp.fromDate(currentTime);
                             post.addPostCloud();
+                            _sendAnalyticsEvent(post.weight);
                             Navigator.of(context).pop();
                           }
                         },

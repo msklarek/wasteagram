@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/widgets/total_counter.dart';
 import 'location.dart';
@@ -19,6 +21,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,28 +31,12 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: TabController());
-  }
-}
-
-class TabController extends StatelessWidget {
-  static const tabs = [
-    Tab(icon: Icon(Icons.picture_in_picture_sharp)),
-    //Tab(icon: Icon(Icons.picture_as_pdf)),
-  ];
-
-  final screens = [
-    ListScreen(),
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 1,
-      initialIndex: 0,
-      child: Scaffold(
-        appBar: TotalCounter(context),
-        body: SafeArea(child: TabBarView(children: screens)),
-      ),
-    );
+        navigatorObservers: <NavigatorObserver>[observer],
+        home: Scaffold(
+            appBar: TotalCounter(context),
+            body: ListScreen(
+              analytics: analytics,
+              observer: observer,
+            )));
   }
 }

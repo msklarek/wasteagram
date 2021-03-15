@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,9 @@ import '../models/post_details.dart';
 import '../widgets/add_post_button.dart';
 
 class ListScreen extends StatefulWidget {
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
+  ListScreen({Key key, this.analytics, this.observer}) : super(key: key);
   @override
   _ListScreenState createState() => _ListScreenState();
 }
@@ -52,7 +57,10 @@ class _ListScreenState extends State<ListScreen> {
                         ));
                       }),
                 ),
-                AddPostButton(),
+                AddPostButton(
+                  analytics: widget.analytics,
+                  observer: widget.observer,
+                ),
               ],
             );
           } else {
@@ -67,7 +75,10 @@ class _ListScreenState extends State<ListScreen> {
                   // SizedBox(
                   //   height: 30,
                   // ),
-                  AddPostButton()
+                  AddPostButton(
+                    analytics: widget.analytics,
+                    observer: widget.observer,
+                  )
                 ]);
           }
         });
