@@ -21,6 +21,7 @@ class AddPostButton extends StatelessWidget {
                     builder: (context) =>
                         AddPost(analytics: analytics, observer: observer)));
           },
+          key: Key('add_post_button'),
           tooltip: 'Add Post',
           child: Icon(Icons.camera),
         ));

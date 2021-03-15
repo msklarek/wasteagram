@@ -88,7 +88,10 @@ class _ListScreenState extends State<ListScreen> {
                   SizedBox(
                     height: 30,
                   ),
-                  Center(child: CircularProgressIndicator()),
+                  Center(
+                    child: CircularProgressIndicator(),
+                    key: Key('no_item_indicator'),
+                  ),
                   // SizedBox(
                   //   height: 30,
                   // ),

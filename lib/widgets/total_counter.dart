@@ -18,6 +18,7 @@ Widget TotalCounter(BuildContext context) {
           return Text(
             "Wasteagram - $count",
             style: TextStyle(fontWeight: FontWeight.bold),
+            key: Key('counter'),
           );
         } else {
           return Text("Wasteagram",
